@@ -30,5 +30,8 @@
 ## 一个主-从模式例子的实现
     主从还是需要自己搭建的，ZK不单单是一个工具，而是一个程序，一段工具类
     学习了。
+## 使用Zookeeper的API
+    构建一个Zookeeper的watcher
+    handler(String connectString, int sessionTimeOut, Watcher watcher)
 ## TODO
     把自己电脑搞成Ubuntu,继续我的coder之旅
