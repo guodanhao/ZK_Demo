@@ -21,13 +21,7 @@ public class MasterManager implements Watcher {
         this.hostPort = hostPort;
     }
 
-    public void process(WatchedEvent watchedEvent) {
-
-    }
-
-//    void runForMaster() throws KeeperException, InterruptedException {
-//        zk.create("/master", serverId.getBytes(), OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
-//    }
+    boolean isLeader = false;
 
     boolean checkMaster() {
         while (true) {
@@ -35,7 +29,8 @@ public class MasterManager implements Watcher {
             try {
 
                 byte[] data = zk.getData("/master", false, stat);
-
+                isLeader = new String(data).equals(serverId);
+                return true;
 
             } catch (KeeperException e) {
                 e.printStackTrace();
@@ -43,5 +38,33 @@ public class MasterManager implements Watcher {
                 e.printStackTrace();
             }
         }
+    }
+
+    void runForMaster() {
+        while (true) {
+            try {
+
+                zk.create("/master", serverId.getBytes(), OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
+                isLeader = true;
+                break;
+
+            } catch (KeeperException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            if (checkMaster()) {
+                break;
+            }
+        }
+    }
+
+    public void process(WatchedEvent watchedEvent) {
+        System.out.println(watchedEvent);
+    }
+
+    public static void main(String[] args) {
+
     }
 }
