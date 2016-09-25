@@ -31,7 +31,7 @@ public class Master implements Watcher {
     public static void main(String[] args)
         throws Exception {
 
-        Master master = new Master(args[0]);
+        Master master = new Master("127.0.0.1:2181");
         master.startZK();
 //
         Thread.sleep(6000);
