@@ -33,5 +33,9 @@
 ## 使用Zookeeper的API
     构建一个Zookeeper的watcher
     handler(String connectString, int sessionTimeOut, Watcher watcher)
-## TODO
-    把自己电脑搞成Ubuntu,继续我的coder之旅
+## 使用StringCallBack
+    异步构造节点，然后回调返回结果
+    switch（结果）{
+        case：
+    }
+***
