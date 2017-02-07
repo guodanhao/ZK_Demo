@@ -6,23 +6,54 @@ import java.util.concurrent.CyclicBarrier;
 public class ZKtest01 {
 
     public static void main(String[] args) {
-        System.out.println("guodanhao".hashCode());
 
-        int READ = 1 << 0;
+        final TestLock testLock = new TestLock();
 
-        int WRITE = 1 << 1;
 
-        int CREATE = 1 << 2;
+        Thread threadA = new Thread(new Runnable() {
+            public void run() {
+                try {
+                    testLock.methodB();
 
-        int DELETE = 1 << 3;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
-        int ADMIN = 1 << 4;
+        Thread threadB = new Thread(new Runnable() {
+            public void run() {
+                try {
+                    testLock.methodB();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
-        int ALL = READ | WRITE | CREATE | DELETE | ADMIN;
+        threadB.start();
 
-        System.out.println(READ);
-        System.out.println(WRITE);
-        System.out.println(READ | WRITE);
-        System.out.println(ALL);
+        threadA.start();
+
+    }
+}
+
+
+class TestLock{
+
+    public void methodA() throws InterruptedException {
+        System.out.println("start:");
+        Thread.sleep(5000);
+        System.out.println(":end");
+    }
+
+
+    public void methodB() throws InterruptedException {
+//        Thread.yield();
+        synchronized (this) {
+            Thread.sleep(5000);
+            System.out.println("lock all class");
+
+        }
     }
 }
