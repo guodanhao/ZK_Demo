@@ -1,9 +1,9 @@
-package service.Imp;
+package service;
 
 /**
  * Created by muxi on 2017/2/15.
  */
-public interface HandlerImp {
+public interface Handler {
 
     /**
      * 触发方法

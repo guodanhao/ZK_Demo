@@ -27,11 +27,9 @@ public class MasterManager implements Watcher {
         while (true) {
             Stat stat = new Stat();
             try {
-
                 byte[] data = zk.getData("/master", false, stat);
                 isLeader = new String(data).equals(serverId);
                 return true;
-
             } catch (KeeperException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
@@ -43,11 +41,9 @@ public class MasterManager implements Watcher {
     void runForMaster() {
         while (true) {
             try {
-
                 zk.create("/master", serverId.getBytes(), OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
                 isLeader = true;
                 break;
-
             } catch (KeeperException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
